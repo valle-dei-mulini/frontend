@@ -16,6 +16,8 @@ import {
 
 import Weather from './Weather';
 
+const API_URL=process.env.REACT_APP_BASE_URL
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +31,10 @@ class App extends Component {
 
   // get a json array of city name strings
   getCityList = () => {
-    fetch('/api/cities')
+    fetch(`${API_URL}/api/cities`)
     .then(res => res.json())
     .then(res => {
+      if (!res) return 'no data';
       var cityList = res.map(r => r.city_name);
       this.setState({ cityList });
     });
@@ -45,7 +48,7 @@ class App extends Component {
   // fetch an object that has a city property
   // after getting city list clear input field
   handleAddCity = () => {
-    fetch('/api/cities', {
+    fetch(`${API_URL}/api/cities`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ city: this.state.newCityName })
@@ -60,9 +63,10 @@ class App extends Component {
   // get weather for city selected
   // enqueue change to weather component state variable
   getWeather = (city) => {
-    fetch(`/api/weather/${city}`)
+    fetch(`${API_URL}/api/weather/${city}`)
     .then(res => res.json())
     .then(weather => {
+      if (!weather) return 'no data';
       console.log(weather);
       this.setState({ weather });
     });
