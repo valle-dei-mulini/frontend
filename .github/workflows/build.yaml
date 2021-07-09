@@ -21,7 +21,6 @@ on:
 
 env:
   REGISTRY: valledeimulini
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   push_to_registry:
@@ -59,7 +58,7 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ci-${GITHUB_SHA::7}
+          tags: ${{ env.REGISTRY }}/${{ github.event.repository.name }}:ci-${GITHUB_SHA::7}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       
