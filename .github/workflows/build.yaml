@@ -5,12 +5,19 @@
 # Availability: https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching #
 ##############################################################################################################
 
+##############################################################################################################
+# Title: Github Actions workflow for merged/closed PRs                                                       #
+# Author: Brenner, M.                                                                                        #
+# Date: 2020                                                                                                 #                                                                                    #
+# Availability: https://brennerm.github.io/posts/trigger-github-actions-on-pr-close.html                     #
+##############################################################################################################
+
+
 name: Publish Docker image
 
 on:
-  push:
-    branches:
-      - "main"
+  pull_request:
+    types: [ "closed" ]
 
 env:
   REGISTRY: valledeimulini
@@ -18,6 +25,8 @@ env:
 
 jobs:
   push_to_registry:
+    # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
