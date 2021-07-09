@@ -19,9 +19,6 @@ on:
   pull_request:
     types: [ "closed" ]
 
-env:
-  REGISTRY: valledeimulini
-
 jobs:
   push_to_registry:
     # this job will only run if the PR has been merged
@@ -58,7 +55,7 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.event.repository.name }}:ci-${GITHUB_SHA::7}
+          tags: valledeimulini/${{ github.event.repository.name }}:ci-${GITHUB_SHA::7}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       
