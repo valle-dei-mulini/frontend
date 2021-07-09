@@ -21,6 +21,8 @@ jobs:
     if: github.event.pull_request.merged == true
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    env:
+      SHA7: ${GITHUB_SHA::7}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -44,4 +46,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.event.repository.name }}:ci-${{ steps.short-sha.outputs.sha }}
+          tags: ${{ env.REGISTRY }}/${{ github.event.repository.name }}:ci-$SHA7
