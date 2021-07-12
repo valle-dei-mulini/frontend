@@ -68,3 +68,26 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+  update_tag:
+    needs: ["push_to_registry"]
+    if: github.event.pull_request.merged == true
+    name: Update frontend tag in helm chart
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+        with:
+          repository: valle-dei-mulini/infrastructure
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "frontend:\n\s\simage:\n\s\s\s\stag:.*"
+          replace: "frontend:\n\s\simage:\n\s\s\s\stag:\s'ci-${{ github.sha}}'"
+      - name: Commit changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "update tag"
+          git push
