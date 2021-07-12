@@ -82,8 +82,8 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "frontend:\n\s\simage:\n\s\s\s\stag:.*"
-          replace: "frontend:\n\s\simage:\n\s\s\s\stag:\s'ci-${{ github.sha}}'"
+          find: "frontend:\n  image:\n    tag:.*"
+          replace: "frontend:\n  image:\n    tag: 'ci-${{ github.sha}}'"
       - name: Commit changes
         run: |
           git config user.name github-actions
