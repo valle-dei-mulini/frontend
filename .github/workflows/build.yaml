@@ -77,17 +77,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: valle-dei-mulini/infrastructure
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.VALLE_TOKEN }}
       - name: Commit changes
         run: |
-          sed -e '/frontend:/{                                                                 
+          sed -i '/frontend:/{                                                                 
           N
-          s/  image:/image:/
+          s/  image:/  image:/
           N
           s/    tag:.*/    tag: "ci-${{ github.sha}}"/
           }' charts/app/values.yaml 
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "update tag"
+          git commit -m "update frontend tag"
           git push
