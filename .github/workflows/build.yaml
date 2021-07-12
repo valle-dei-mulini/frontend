@@ -80,7 +80,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit changes
         run: |
-          sed -e '/frontend:/{                                                                 
+          sed -i '/frontend:/{                                                                 
           N
           s/  image:/image:/
           N
