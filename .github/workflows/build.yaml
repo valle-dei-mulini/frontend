@@ -82,7 +82,7 @@ jobs:
         run: |
           sed -i '/frontend:/{                                                                 
           N
-          s/  image:/image:/
+          s/  image:/  image:/
           N
           s/    tag:.*/    tag: "ci-${{ github.sha}}"/
           }' charts/app/values.yaml 
