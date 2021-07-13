@@ -15,9 +15,7 @@
 server {
     listen       3000;
 
-    location / {
-        root   /usr/share/nginx/html;
-    }
+    root   /usr/share/nginx/html;
 
     location /api {
         proxy_set_header   Host                 $http_host;
@@ -25,7 +23,7 @@ server {
         proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto    $scheme;
         
-        proxy_pass http://backend-service:5000;
+        proxy_pass $NGINX_URL;
     }
     
     error_page   500 502 503 504  /50x.html;
