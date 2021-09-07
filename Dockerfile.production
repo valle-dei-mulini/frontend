@@ -1,10 +1,10 @@
-FROM node:lts-slim@sha256:41bbb713cb3ac5f7d531ccdc156d2611f019b50b9c478d6475c79ced618640f0 AS build
+FROM node:lts-slim@sha256:c097018182469e8391a577955ef25f0d2ac9b0b19179835d621df48c978fa24d AS build
 WORKDIR /app
 COPY package*.json /app
 RUN npm ci --only=production
 
 
-FROM node:lts-slim@sha256:41bbb713cb3ac5f7d531ccdc156d2611f019b50b9c478d6475c79ced618640f0
+FROM node:lts-slim@sha256:c097018182469e8391a577955ef25f0d2ac9b0b19179835d621df48c978fa24d
 ENV REACT_APP_BASE_URL=http://localhost:5000
 ENV NODE_ENV production
 USER node
